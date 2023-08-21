@@ -1,7 +1,8 @@
+from __future__ import annotations
 from math import log, sqrt
 import random
 from time import time
-from typing import Tuple
+from typing import Tuple, List
 
 # Voce pode criar funcoes auxiliares neste arquivo
 # e tambem modulos auxiliares neste pacote.
@@ -9,22 +10,32 @@ from typing import Tuple
 # Nao esqueca de renomear 'your_agent' com o nome
 # do seu agente.
 
-C = 1
+x = list()
+
+C = 1 / sqrt(2)
 MAX_TIME = 5
 class Nodo:
     def __init__(self, state, parent=None, move=None):
         self.state = state
         self.parent = parent
         self.move = move
-
+ 
         self.children = []
         self.wins = 0
         self.visits = 0
         self.possible_moves = state.legal_moves()
 
+    @staticmethod
+    def UCB(nodo: Nodo):
+        if nodo.visits == 0:
+            return float('inf')
+        if nodo.parent is None:
+            raise ValueError("Nodo raiz nao tem pai")
+
+        return nodo.wins/nodo.visits + 2*C*sqrt(2*log(nodo.parent.visits)/nodo.visits)
+        
     def ucb_select(self):
-        selection = sorted(self.children, key = lambda c: c.wins/c.visits + 2*C*sqrt(2*log(self.visits)/c.visits))
-        return selection
+        return max(self.children, key=Nodo.UCB)
     
     def add_child(self, move, state):
         n = Nodo(state, self, move)
@@ -33,10 +44,10 @@ class Nodo:
 
         return n
 
-def backpropagation(nodo: Nodo, result):
+def backpropagation(nodo: Nodo | None, win):
     while nodo != None:
         nodo.visits += 1
-        nodo.wins += result
+        nodo.wins += win
         nodo = nodo.parent
     
 def make_move(state) -> Tuple[int, int]:
@@ -58,23 +69,21 @@ def make_move(state) -> Tuple[int, int]:
     while time() - start_time < MAX_TIME:
         nodo = raiz
 
-        while nodo.possible_moves == [] and nodo.children != []:
+        while len(nodo.possible_moves) == 0 and len(nodo.children) != 0:
             nodo = nodo.ucb_select()
 
         while not nodo.state.is_terminal():
-            move = random.choice(nodo.possible_moves)
+            move = random.choice(list(nodo.possible_moves))
             new_state = nodo.state.copy().next_state(move)
             next_node = Nodo(new_state, nodo, move)
             nodo = nodo.add_child(next_node, move, new_state)
 
         winner = nodo.state.winner()
-        result = 0
+        win = 0
         if winner == state.player:
-            result = 1
-        elif winner == state.get_board().opponent(state.player):
-            result = -1
+            win = 1
 
-        backpropagation(nodo, result)
+        backpropagation(nodo, win)
 
     return nodo.state.move
 

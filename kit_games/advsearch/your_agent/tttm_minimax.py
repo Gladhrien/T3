@@ -31,4 +31,8 @@ def utility(state, player:str) -> float:
     """
     Retorna a utilidade de um estado (terminal) 
     """
-    return 0   # substitua pelo seu codigo
+    if state.winner() == player:
+        return 1
+    if state.winner() == None:
+        return 0
+    return -1

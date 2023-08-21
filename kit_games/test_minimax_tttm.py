@@ -77,7 +77,7 @@ BW.
         move = self.run_with_timeout(60, minimax.minimax_move, (state, -1, tttm_agent.utility) )
 
         # checa se a primeira jogada e' no centro
-        self.assertEquals(move, (1, 1), "Erro: a primeira jogada deve ser no centro, senao o jogo sera' perdido")
+        self.assertEqual(move, (1, 1), "Erro: a primeira jogada deve ser no centro, senao o jogo sera' perdido")
 
     def test_proven_win_exploiting_first_blunder(self):
         """

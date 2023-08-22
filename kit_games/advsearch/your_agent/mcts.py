@@ -44,10 +44,19 @@ class Nodo:
 
         return n
 
-def backpropagation(nodo: Nodo | None, win):
+# def backpropagation(nodo: Nodo | None, win):
+#     while nodo != None:
+#         nodo.visits += 1
+#         nodo.wins += win
+#         nodo = nodo.parent
+
+def backpropagation(nodo: Nodo | None, result):
     while nodo != None:
         nodo.visits += 1
-        nodo.wins += win
+        if result == 1:  # win
+            nodo.wins += 1
+        elif result == 0:  # draw
+            nodo.wins += 0.5  # Treat draw as half a win; you can modify this as per your requirements
         nodo = nodo.parent
     
 def make_move(state) -> Tuple[int, int]:
@@ -76,7 +85,12 @@ def make_move(state) -> Tuple[int, int]:
             move = random.choice(list(nodo.possible_moves))
             new_state = nodo.state.copy().next_state(move)
             next_node = Nodo(new_state, nodo, move)
-            nodo = nodo.add_child(next_node, move, new_state)
+
+            nodo.add_child(move, new_state)
+            # nodo = nodo.add_child(next_node, move, new_state)
+            nodo = next_node
+            # nodo = nodo.add_child(move, new_state)
+
 
         winner = nodo.state.winner()
         win = 0

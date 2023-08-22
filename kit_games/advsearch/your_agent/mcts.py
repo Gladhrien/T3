@@ -1,8 +1,9 @@
 from __future__ import annotations
-from math import log, sqrt
+
 import random
+from math import log, sqrt
 from time import time
-from typing import Tuple, List
+from typing import List, Tuple
 
 # Voce pode criar funcoes auxiliares neste arquivo
 # e tambem modulos auxiliares neste pacote.
@@ -14,16 +15,18 @@ x = list()
 
 C = 1 / sqrt(2)
 MAX_TIME = 5
+
+
 class Nodo:
     def __init__(self, state, parent=None, move=None):
         self.state = state
         self.parent = parent
         self.move = move
- 
+
         self.children = []
         self.wins = 0
         self.visits = 0
-        self.possible_moves = state.legal_moves()
+        self.possible_moves = list(state.legal_moves())
 
     @staticmethod
     def UCB(nodo: Nodo):
@@ -33,10 +36,10 @@ class Nodo:
             raise ValueError("Nodo raiz nao tem pai")
 
         return nodo.wins/nodo.visits + 2*C*sqrt(2*log(nodo.parent.visits)/nodo.visits)
-        
+
     def ucb_select(self):
         return max(self.children, key=Nodo.UCB)
-    
+
     def add_child(self, move, state):
         n = Nodo(state, self, move)
         self.possible_moves.remove(move)
@@ -44,24 +47,19 @@ class Nodo:
 
         return n
 
-# def backpropagation(nodo: Nodo | None, win):
-#     while nodo != None:
-#         nodo.visits += 1
-#         nodo.wins += win
-#         nodo = nodo.parent
-
 def backpropagation(nodo: Nodo | None, result):
     while nodo != None:
         nodo.visits += 1
-        if result == 1:  # win
+        if result == 1:
             nodo.wins += 1
-        elif result == 0:  # draw
-            nodo.wins += 0.5  # Treat draw as half a win; you can modify this as per your requirements
+        elif result == 0:
+            nodo.wins += 0.5
         nodo = nodo.parent
-    
+
+
 def make_move(state) -> Tuple[int, int]:
     """
-    Returns a move for the given game state. 
+    Returns a move for the given game state.
     The game is not specified, but this is MCTS and should handle any game, since
     their implementation has the same interface.
 
@@ -85,12 +83,8 @@ def make_move(state) -> Tuple[int, int]:
             move = random.choice(list(nodo.possible_moves))
             new_state = nodo.state.copy().next_state(move)
             next_node = Nodo(new_state, nodo, move)
-
             nodo.add_child(move, new_state)
-            # nodo = nodo.add_child(next_node, move, new_state)
             nodo = next_node
-            # nodo = nodo.add_child(move, new_state)
-
 
         winner = nodo.state.winner()
         win = 0
@@ -99,7 +93,4 @@ def make_move(state) -> Tuple[int, int]:
 
         backpropagation(nodo, win)
 
-    return nodo.state.move
-
-
-
+    return nodo.move

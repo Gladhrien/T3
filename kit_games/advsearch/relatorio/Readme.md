@@ -11,7 +11,7 @@ Não. Em 20 partidas rodadas, houveram 13 ganhos e 7 empates, o que, em uma esta
 Aparentemente sim. Houve empate em todas partidas de uma amostragem de 20 rodadas.
 
 ## (iii) O minimax sempre empata contra as jogadas perfeitas recomendadas pelo https://nyc.cs.berkeley.edu/uni/games/ttt/variants/misere ? Para verificar isso, use o humanplayer. No link, faça as jogadas do minimax, e no servidor do kit, faça as jogadas recomendadas (amarelo ou verde) do link.
-
+Sim. De 10 partidas jogadas, todas resultaram em um empate com o minimax fazendo uma das jogadas sugeridas pelo site.
 
 ## Othello:
 Para o Othello, faça um mini-torneio entre os algoritmos. Observe e relate qual implementação foi a mais bem-sucedida.

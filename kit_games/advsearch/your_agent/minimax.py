@@ -1,33 +1,17 @@
 import random
-from typing import Tuple, Callable
+from typing import Callable, Tuple
 
-def min_move(state, depth:int, alpha:float, beta:float, eval_func:Callable) -> Tuple[float, Tuple[int, int]]:
-    if depth == 0 or state.is_terminal(): 
-        return eval_func(state, state.player), (-1, -1)
+
+def min_move(state, depth: int, alpha: float, beta: float, eval_func: Callable, player) -> Tuple[float, Tuple[int, int]]:
+    if depth == 0 or state.is_terminal():
+        return eval_func(state, player), (-1, -1)
     v = float('inf')
     a = (-1, -1)
     for move in state.legal_moves():
-        max_v, _ = max_move(state.next_state(move), depth-1, alpha, beta, eval_func)
+        max_v, _ = max_move(state.next_state(move), depth-1, alpha, beta, eval_func, player)
         if max_v < v:
             a = move
             v = max_v
-        alpha = max(alpha, v)
-        if alpha >= beta:
-            break
-
-    return v, a
-
-
-def max_move(state, depth:int, alpha:float, beta:float, eval_func:Callable) -> Tuple[float, Tuple[int, int]]:
-    if depth == 0 or state.is_terminal(): 
-        return eval_func(state, state.player), (-1, -1)
-    v = float('-inf')
-    a = (-1, -1)
-    for move in state.legal_moves():
-        min_v, _ = min_move(state.next_state(move), depth-1, alpha, beta, eval_func)
-        if min_v > v:
-            a = move
-            v = min_v
         beta = min(beta, v)
         if beta <= alpha:
             break
@@ -35,7 +19,24 @@ def max_move(state, depth:int, alpha:float, beta:float, eval_func:Callable) -> T
     return v, a
 
 
-def minimax_move(state, max_depth:int, eval_func:Callable) -> Tuple[int, int]:
+def max_move(state, depth: int, alpha: float, beta: float, eval_func: Callable, player) -> Tuple[float, Tuple[int, int]]:
+    if depth == 0 or state.is_terminal():
+        return eval_func(state, player), (-1, -1)
+    v = float('-inf')
+    a = (-1, -1)
+    for move in state.legal_moves():
+        min_v, _ = min_move(state.next_state(move), depth-1, alpha, beta, eval_func, player)
+        if min_v > v:
+            a = move
+            v = min_v
+        alpha = max(alpha, v)
+        if alpha >= beta:
+            break
+
+    return v, a
+
+
+def minimax_move(state, max_depth: int, eval_func: Callable) -> Tuple[int, int]:
     """
     Returns a move computed by the minimax algorithm with alpha-beta pruning for the given game state.
     :param state: state to make the move (instance of GameState)
@@ -45,5 +46,5 @@ def minimax_move(state, max_depth:int, eval_func:Callable) -> Tuple[int, int]:
                     and should return a float value representing the utility of the state for the player.
     :return: (int, int) tuple with x, y coordinates of the move (remember: 0 is the first row/column)
     """
-    _, a = max_move(state, max_depth, float('-inf'), float('inf'), eval_func)
+    _, a = max_move(state, max_depth, float('-inf'), float('inf'), eval_func, state.player)
     return a

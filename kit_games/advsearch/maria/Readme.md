@@ -25,7 +25,7 @@ Sim. De 10 partidas jogadas, todas resultaram em um empate com o minimax fazendo
 Na função de avaliação customizada utilizamos uma heurística baseada no potencial. Dispõe-se da contagem das opções de movimento disponíveis, assim como da quantificação dos movimentos potenciais e da valoração dos estados mediante a aplicação da máscara proveniente da outra heurística. Os movimentos potenciais referem-se à quantidade de casas desocupadas contíguas às peças adversárias, ainda que não necessariamente conformem movimentos legalmente admissíveis.
 
 # Descrição do critério de parada:
-O critério de parada adotado foi uma profundidade máxima fixa de 4.
+O critério de parada adotado para o minimax foi uma profundidade máxima fixa de 4. Já para o monte-carlo foi um tempo máximo de 3 segundos.
 
 # Resultado da avaliação:
 python server.py othello advsearch/maria/othello_minimax_mask.py advsearch/maria/othello_minimax_count.py
@@ -38,19 +38,19 @@ mask x custom
 
 python server.py othello advsearch/maria/othello_minimax_mask.py advsearch/maria/mcts.py
 mask x monte-carlo
-   ? x ?
+   5 x 0
 
 python server.py othello advsearch/maria/othello_minimax_count.py advsearch/maria/othello_minimax_custom.py
 count x custom
-    10 x 0
+    10 x 2 (mudamos o custom e ele começou a performar melhor mas n da tempo de rodar mais)
 
 python server.py othello advsearch/maria/othello_minimax_count.py advsearch/maria/mcts.py
 count x monte-carlo
-    ? x ?
+    5 x 0
 
 python server.py othello advsearch/maria/othello_minimax_custom.py advsearch/maria/mcts.py
 custom x monte-carlo
-     ? x ?
+     2 x 0
 
 # Implementação escolhida para o torneio e se houve implementação de alguma melhoria no minimax ou no MCTS:
 A implementação escolhida para o torneio foi a de minimax com heurística customizada pois foi a que apresentou o melhor desempenho. 

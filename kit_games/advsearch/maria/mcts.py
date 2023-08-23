@@ -8,7 +8,7 @@ from typing import List, Tuple
 x = list()
 
 C = 1 / sqrt(2)
-MAX_TIME = 5
+MAX_TIME = 3
 
 
 class Nodo:
@@ -40,6 +40,9 @@ class Nodo:
         self.children.append(n)
 
         return n
+    
+    def __lt__(self, other) -> bool:
+        return self.UCB(self) < other.UCB(self)
 
 def backpropagation(nodo: Nodo | None, result):
     while nodo != None:
@@ -87,4 +90,4 @@ def make_move(state) -> Tuple[int, int]:
 
         backpropagation(nodo, win)
 
-    return nodo.move
+    return max(raiz.children).move

@@ -50,5 +50,5 @@ def evaluate_custom(state, player: str) -> float:
         legal_moves = len(state.legal_moves())
     potential_moves = potential(state, player)
     mask = evaluate_mask(state, player)
-    combined_mobility = 0.1 * legal_moves + 0.9 * potential_moves
+    combined_mobility = 0.6 * legal_moves + 0.4 * potential_moves
     return 0.5 * combined_mobility + 0.5 * mask

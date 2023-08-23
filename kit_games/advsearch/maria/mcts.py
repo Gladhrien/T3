@@ -5,12 +5,6 @@ from math import log, sqrt
 from time import time
 from typing import List, Tuple
 
-# Voce pode criar funcoes auxiliares neste arquivo
-# e tambem modulos auxiliares neste pacote.
-#
-# Nao esqueca de renomear 'your_agent' com o nome
-# do seu agente.
-
 x = list()
 
 C = 1 / sqrt(2)

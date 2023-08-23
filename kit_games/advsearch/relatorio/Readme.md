@@ -3,6 +3,13 @@
 * Giulia Chimini Stefainski - 00289108 - Turma A
 * Matheus Henrique Sabadin  - 00228729 - Turma A
 
+# Agente MARIA
+Monte-Carlo-Minimax
+Advanced
+Recursive
+Ingenious
+Algorithm
+
 # Tic-tac-toe misere
 ## (i) O minimax sempre ganha do randomplayer? 
 Não. Em 20 partidas rodadas, houveram 13 ganhos e 7 empates, o que, em uma estatística muito simplificada, gira em torno 53,8% de ganho para o minimax.

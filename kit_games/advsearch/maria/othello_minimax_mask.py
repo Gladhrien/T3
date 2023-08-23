@@ -5,11 +5,6 @@ from ..othello.board import Board
 from ..othello.gamestate import GameState
 from .minimax import minimax_move
 
-# Voce pode criar funcoes auxiliares neste arquivo
-# e tambem modulos auxiliares neste pacote.
-#
-# Nao esqueca de renomear 'your_agent' com o nome
-# do seu agente.
 
 # mask template adjusted from https://web.fe.up.pt/~eol/IA/MIA0203/trabalhos/Damas_Othelo/Docs/Eval.html
 # could optimize for symmetries but just put all values here for coding speed :P

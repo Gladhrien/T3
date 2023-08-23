@@ -5,13 +5,6 @@ from ..othello.board import Board
 from ..othello.gamestate import GameState
 from .minimax import minimax_move
 
-# Voce pode criar funcoes auxiliares neste arquivo
-# e tambem modulos auxiliares neste pacote.
-#
-# Nao esqueca de renomear 'your_agent' com o nome
-# do seu agente.
-
-
 def make_move(state) -> Tuple[int, int]:
     """
     Returns a move for the given game state

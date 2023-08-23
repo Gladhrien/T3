@@ -20,7 +20,7 @@ class Nodo:
         self.children = []
         self.wins = 0
         self.visits = 0
-        self.possible_moves = list(state.legal_moves())
+        self.possible_moves = list() if state.is_terminal() else list(state.legal_moves())
 
     @staticmethod
     def UCB(nodo: Nodo):

@@ -4,7 +4,7 @@
 * Matheus Henrique Sabadin  - 00228729 - Turma A
 
 # Agente MARIA
-Monte-Carlo-Minimax
+Monte-carlo-minimax
 Advanced
 Recursive
 Ingenious
@@ -21,10 +21,40 @@ Aparentemente sim. Houve empate em todas partidas de uma amostragem de 20 rodada
 Sim. De 10 partidas jogadas, todas resultaram em um empate com o minimax fazendo uma das jogadas sugeridas pelo site.
 
 ## Othello:
-Para o Othello, faça um mini-torneio entre os algoritmos. Observe e relate qual implementação foi a mais bem-sucedida.
-* descrição da função de avaliação customizada;
-* descrição do critério de parada (profundidade máxima fixa? aprofundamento iterativo?)
-* implementação escolhida para o torneio e se houve implementação de alguma melhoria no minimax ou no MCTS.
+# Descrição da função de avaliação customizada:
+Na função de avaliação customizada utilizamos uma heurística baseada no potencial. Dispõe-se da contagem das opções de movimento disponíveis, assim como da quantificação dos movimentos potenciais e da valoração dos estados mediante a aplicação da máscara proveniente da outra heurística. Os movimentos potenciais referem-se à quantidade de casas desocupadas contíguas às peças adversárias, ainda que não necessariamente conformem movimentos legalmente admissíveis.
+
+# Descrição do critério de parada:
+O critério de parada adotado foi uma profundidade máxima fixa de 4.
+
+# Resultado da avaliação:
+python server.py othello advsearch/maria/othello_minimax_mask.py advsearch/maria/othello_minimax_count.py
+mask x count
+  10 x 0
+
+python server.py othello advsearch/maria/othello_minimax_mask.py advsearch/maria/othello_minimax_custom.py
+mask x custom
+   0 x 10
+
+python server.py othello advsearch/maria/othello_minimax_mask.py advsearch/maria/mcts.py
+mask x monte-carlo
+   ? x ?
+
+python server.py othello advsearch/maria/othello_minimax_count.py advsearch/maria/othello_minimax_custom.py
+count x custom
+    10 x 0
+
+python server.py othello advsearch/maria/othello_minimax_count.py advsearch/maria/mcts.py
+count x monte-carlo
+    ? x ?
+
+python server.py othello advsearch/maria/othello_minimax_custom.py advsearch/maria/mcts.py
+custom x monte-carlo
+     ? x ?
+
+# Implementação escolhida para o torneio e se houve implementação de alguma melhoria no minimax ou no MCTS:
+A implementação escolhida para o torneio foi a de minimax com heurística customizada pois foi a que apresentou o melhor desempenho. 
+Não foram feitas melhorias nos algoritmos.
 
 ## Feedback:
 # Quão fácil ou difícil foi realizar o trabalho? como foi trabalhar com o auxílio da IA? quais sugestões teria para melhorar o trabalho?
